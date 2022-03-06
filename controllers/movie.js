@@ -49,6 +49,7 @@ module.exports.displayAddPage = (req, res, next) => {
         title: "AddMovie",
         movie: {},
       });
+    console.log("----------> Entering in Adding page")
 }
 
 // Processes the data submitted from the Add form to create a new movie
@@ -91,6 +92,19 @@ module.exports.processEditPage = (req, res, next) => {
 // Deletes a movie based on its id.
 module.exports.performDelete = (req, res, next) => {
     
-    // ADD YOUR CODE HERE
+    let id = req.params.id;
+
+    Movie.remove({ _id: id }, (err) => {
+      if (err)
+      {
+        res.end(err);
+        console.log(err)
+      } 
+      else
+      {
+        console.log("----------> Entering in Deleteing movi")
+        res.redirect("/movie/list");
+      }
+    });
 
 }
