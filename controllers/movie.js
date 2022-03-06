@@ -42,10 +42,13 @@ module.exports.details = (req, res, next) => {
 }
 
 // Renders the Add form using the add_edit.ejs template
+// Requirement  1.a Fix the Add Button 
 module.exports.displayAddPage = (req, res, next) => {
-    
-    // ADD YOUR CODE HERE        
 
+    res.render("movie/add_edit", {
+        title: "AddMovie",
+        movie: {},
+      });
 }
 
 // Processes the data submitted from the Add form to create a new movie
@@ -56,9 +59,25 @@ module.exports.processAddPage = (req, res, next) => {
 }
 
 // Gets a movie by id and renders the Edit form using the add_edit.ejs template
+// Requirement  1.b Add an Edit Button 
 module.exports.displayEditPage = (req, res, next) => {
     
-    // ADD YOUR CODE HERE
+    let id = req.params.id;
+    Movie.findById(id, (err, movie) => {
+      if (err) 
+      {
+        console.log(err);
+        res.end(err);
+      } 
+      else
+      {
+        res.render("movie/add_edit", {
+          title: "EditMovie",
+          movie: movie,
+        });
+        console.log("----------> Entering in Edit page")
+      }
+    });
 
 }
 
