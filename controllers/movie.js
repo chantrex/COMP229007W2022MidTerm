@@ -42,7 +42,8 @@ module.exports.details = (req, res, next) => {
 }
 
 // Renders the Add form using the add_edit.ejs template
-// Requirement  1.a Fix the Add Button 
+// Requirement  1.a. Fix the Add Button 
+// Requirement  2.a. Complete the displayAddPage 
 module.exports.displayAddPage = (req, res, next) => {
 
     res.render("movie/add_edit", {
@@ -55,12 +56,33 @@ module.exports.displayAddPage = (req, res, next) => {
 // Processes the data submitted from the Add form to create a new movie
 module.exports.processAddPage = (req, res, next) => {
 
-    // ADD YOUR CODE HERE
+      let movie1 = Movie({
+                Title: req.body.Title,
+                Synopsis: req.body.Synopsis,
+                Year: req.body.Year,
+                Director: req.body.Director,
+                Genre: req.body.Genre,
+           });
+      
+      Movie.create(movie1, (err, movie) => {
+        if (err)
+         {
+        return res.status(400).send({
+                    success: false,
+                    message: getErrorMessage(err),
+                });
+        } else
+        {
+            console.log("----------> Adding movie processed!")
+            res.redirect("/movie/list");
+        }
+      });
 
 }
 
 // Gets a movie by id and renders the Edit form using the add_edit.ejs template
-// Requirement  1.b Add an Edit Button 
+// Requirement  1.b. Add an Edit Button 
+// Requirement  2.c. Complete the displayEditPage 
 module.exports.displayEditPage = (req, res, next) => {
     
     let id = req.params.id;
@@ -102,7 +124,7 @@ module.exports.performDelete = (req, res, next) => {
       } 
       else
       {
-        console.log("----------> Entering in Deleteing movi")
+        console.log("----------> Entering in Deleteing movie")
         res.redirect("/movie/list");
       }
     });
