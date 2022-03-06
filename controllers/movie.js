@@ -1,3 +1,8 @@
+// Mid Term Test
+// Student Id: 301217642
+// Student Name: Christopher Chantres
+// Date March 6
+
 // create a reference to the model
 let Movie = require('../models/movie');
 
@@ -54,6 +59,7 @@ module.exports.displayAddPage = (req, res, next) => {
 }
 
 // Processes the data submitted from the Add form to create a new movie
+//  Requirement 2.b. Complete the processAddPage 
 module.exports.processAddPage = (req, res, next) => {
 
       let movie1 = Movie({
@@ -105,9 +111,31 @@ module.exports.displayEditPage = (req, res, next) => {
 }
 
 // Processes the data submitted from the Edit form to update a movie
+// Requirement 2.d. Complete the processEditPage 
 module.exports.processEditPage = (req, res, next) => {
-    
-    // ADD YOUR CODE HERE
+        
+    let id = req.params.id;
+    let movie1 = Movie({
+            _id: req.body.id,
+            Title: req.body.Title,
+            Synopsis: req.body.Synopsis,
+            Year: req.body.Year,
+            Director: req.body.Director,
+            Genre: req.body.Genre,
+        });
+
+    Movie.updateOne({ _id: id }, movie1, (err) => {
+    if (err)
+    {
+        console.log(err);
+        res.end(err);
+    } 
+    else 
+    {
+        console.log("----------> Edditing movie processed!");
+      res.redirect("/movie/list");
+    }
+  });
     
 }
 
